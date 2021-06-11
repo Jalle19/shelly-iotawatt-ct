@@ -1,0 +1,19 @@
+{
+  "name": "shelly-mqtt-influxdb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "shelly-mqtt-influxdb.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async-mqtt": "^2.6.1",
+    "axios": "^0.21.1",
+    "influx": "^5.9.2",
+    "mqtt": "^4.2.6",
+    "multicast-dns": "^7.2.3"
+  }
+}
