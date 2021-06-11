@@ -28,6 +28,11 @@ Shelly configuration requirements:
 
 * MQTT enabled
 * Accessible over HTTP on port 80
+* A supported relay (unsupported will be ignored gracefully)
+
+### Supported relays
+
+* Shelly 2.5
 
 ## Usage
 
