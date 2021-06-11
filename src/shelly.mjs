@@ -10,7 +10,7 @@ export class Shelly {
     }
 
     getName() {
-        return this.settings.name ?? this.name
+        return this.settings.name || this.name
     }
 
     getHttpSettingsUrl() {
@@ -30,10 +30,10 @@ export class Shelly {
                 // Shelly 2.5 has two channels that may have user-configured names
                 topics.push({
                     topic: createFullTopicName('relay/0/power'),
-                    name: this.settings.relays[0].name ?? `${this.name} channel 0`,
+                    name: this.settings.relays[0].name || `${this.name} channel 0`,
                 }, {
                     topic: createFullTopicName('relay/1/power'),
-                    name: this.settings.relays[1].name ?? `${this.name} channel 1`,
+                    name: this.settings.relays[1].name || `${this.name} channel 1`,
                 })
                 break
             default:

@@ -9,6 +9,9 @@
   "keywords": [],
   "author": "Sam Stenvall <sam.stenvall@iki.fi>",
   "license": " \tGPL-3.0-only",
+  "engines": {
+    "node": ">=12"
+  },
   "dependencies": {
     "async-mqtt": "^2.6.1",
     "axios": "^0.21.1",

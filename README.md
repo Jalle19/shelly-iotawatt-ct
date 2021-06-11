@@ -22,7 +22,7 @@ Infrastructure requirements:
 
 Application requirements:
 
-* Node.js (tested with 14.x)
+* Node.js >= 12.x
 
 Shelly configuration requirements:
 
