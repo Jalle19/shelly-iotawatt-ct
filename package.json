@@ -1,7 +1,7 @@
 {
   "name": "shelly-iotawatt-ct",
   "version": "1.0.0",
-  "description": "",
+  "description": "Allows emulating IotaWatt devices in InfluxDB using Shelly relays",
   "main": "shelly-iotawatt-ct.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
