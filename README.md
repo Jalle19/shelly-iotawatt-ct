@@ -64,7 +64,38 @@ Discovered new device LivingRoomCrown
 
 ### Running as a systemd service
 
-TODO
+1. Clone the repository to `/opt/shelly-iotawatt-ct`
+2. Run `npm install`
+2. Copy `systemd/shelly-iotawatt-ct.service` to `/etc/systemd/system/shelly-iotawatt-ct.service`
+3. Copy `systemd/shelly-iotawatt-ct` to `/etc/shelly-iotawatt-ct` and modify it to match your environment
+4. Run the following commands to enable and start the service:
+
+```bash
+sudo systemctl enable shelly-iotawatt-ct.service
+sudo systemctl start shelly-iotawatt-ct.service
+```
+
+Check that the service is working:
+
+```bash
+$ sudo systemctl status shelly-iotawatt-ct
+● shelly-iotawatt-ct.service - Allows emulating IotaWatt devices in InfluxDB using Shelly relays
+   Loaded: loaded (/etc/systemd/system/shelly-iotawatt-ct.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2021-06-11 17:25:34 EEST; 4s ago
+ Main PID: 14505 (node)
+    Tasks: 11 (limit: 2335)
+   CGroup: /system.slice/shelly-iotawatt-ct.service
+           └─14505 /usr/bin/node --unhandled-rejections=strict /opt/shelly-iotawatt-ct/shelly-iotawatt-ct
+
+Jun 11 17:25:34 influxdb-grafana systemd[1]: Started Allows emulating IotaWatt devices in InfluxDB using Shelly 
+Jun 11 17:25:37 influxdb-grafana node[14505]: Discovered new device KitchenTableLight
+Jun 11 17:25:37 influxdb-grafana node[14505]: Discovered new device LivingRoomCrown
+Jun 11 17:25:38 influxdb-grafana node[14505]: Discovered new device HallLights
+Jun 11 17:25:38 influxdb-grafana node[14505]: Discovered new device KitchenSinkAndWindow
+Jun 11 17:25:38 influxdb-grafana node[14505]: Discovered new device LivingRoomWall
+Jun 11 17:25:38 influxdb-grafana node[14505]: Discovered new device BedroomLights
+Jun 11 17:25:38 influxdb-grafana node[14505]: Discovered new device Office
+```
 
 ## Technicalities
 

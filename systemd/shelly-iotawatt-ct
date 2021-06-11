@@ -1,0 +1,5 @@
+MQTT_URL=mqtt://localhost
+INFLUX_HOST=localhost
+INFLUX_DATABASE=iotawatt
+INFLUX_USERNAME=iotawatt
+INFLUX_PASSWORD=iotawatt
