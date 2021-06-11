@@ -1,14 +1,14 @@
 {
-  "name": "shelly-mqtt-influxdb",
+  "name": "shelly-iotawatt-ct",
   "version": "1.0.0",
   "description": "",
-  "main": "shelly-mqtt-influxdb.mjs",
+  "main": "shelly-iotawatt-ct.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Sam Stenvall <sam.stenvall@iki.fi>",
+  "license": " \tGPL-3.0-only",
   "dependencies": {
     "async-mqtt": "^2.6.1",
     "axios": "^0.21.1",

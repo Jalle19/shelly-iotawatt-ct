@@ -20,7 +20,7 @@ INFLUX_HOST=10.110.1.6 \
 INFLUX_DATABASE=iotawatt \
 INFLUX_USERNAME=iotawatt \
 INFLUX_PASSWORD=iotawatt \
-node --unhandled-rejections=strict ./shelly-mqtt-influxdb.mjs
+node --unhandled-rejections=strict ./shelly-iotawatt-ct.mjs
 ```
 
 During normal operation, the application prints which devices it has discovered, after which it goes silent.
@@ -31,4 +31,4 @@ TODO
 
 ## License
 
-
+GNU GENERAL PUBLIC LICENSE Version 3
