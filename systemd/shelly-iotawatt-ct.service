@@ -4,6 +4,7 @@ Description=Allows emulating IotaWatt devices in InfluxDB using Shelly relays
 [Service]
 EnvironmentFile=/etc/shelly-iotawatt-ct
 ExecStart=/usr/bin/node --unhandled-rejections=strict /opt/shelly-iotawatt-ct/shelly-iotawatt-ct.mjs
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
