@@ -1,5 +1,6 @@
 [Unit]
 Description=Allows emulating IotaWatt devices in InfluxDB using Shelly relays
+After=network.target
 
 [Service]
 EnvironmentFile=/etc/shelly-iotawatt-ct
