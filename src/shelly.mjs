@@ -36,6 +36,12 @@ export class Shelly {
                     name: this.settings.relays[1].name || `${this.name} channel 1`,
                 })
                 break
+            case 'shelly1pm':
+                topics.push({
+                    topic: createFullTopicName('relay/0/power'),
+                    name: this.settings.relays[0].name || `${this.name} channel 0`,
+                })
+                break
             default:
                 return []
         }
