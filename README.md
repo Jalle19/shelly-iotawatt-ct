@@ -33,6 +33,7 @@ Shelly configuration requirements:
 ### Supported relays
 
 * Shelly 2.5
+* Shelly 1 PM
 
 ## Usage
 
