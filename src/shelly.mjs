@@ -42,6 +42,12 @@ export class Shelly {
                     name: this.settings.relays[0].name || `${this.name} channel 0`,
                 })
                 break
+            case 'shellydimmer2':
+                topics.push({
+                    topic: createFullTopicName('light/0/power'),
+                    name: this.settings.lights[0].name || `${this.name} light 0`,
+                })
+                break
             default:
                 return []
         }
