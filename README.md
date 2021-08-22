@@ -34,6 +34,7 @@ Shelly configuration requirements:
 
 * Shelly 2.5
 * Shelly 1 PM
+* Shelly Dimmer 2 (probably 1 as well)
 
 ## Usage
 
