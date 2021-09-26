@@ -6,6 +6,7 @@ After=network.target
 EnvironmentFile=/etc/shelly-iotawatt-ct
 ExecStart=/usr/bin/node --unhandled-rejections=strict /opt/shelly-iotawatt-ct/shelly-iotawatt-ct.mjs
 Restart=always
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
