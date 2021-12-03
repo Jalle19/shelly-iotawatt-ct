@@ -6,7 +6,7 @@ export class Shelly {
     }
 
     getType() {
-        return this.name.split('-')[0]
+        return this.name.substring(0, this.name.lastIndexOf('-'))
     }
 
     getName() {
