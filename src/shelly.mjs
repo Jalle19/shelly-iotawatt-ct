@@ -6,7 +6,7 @@ export class Shelly {
     }
 
     getType() {
-        return this.name.split('-')[0]
+        return this.name.substring(0, this.name.lastIndexOf('-'))
     }
 
     getName() {
@@ -37,6 +37,8 @@ export class Shelly {
                 })
                 break
             case 'shelly1pm':
+            case 'shellyplug':
+            case 'shellyplug-s':
                 topics.push({
                     topic: createFullTopicName('relay/0/power'),
                     name: this.settings.relays[0].name || `${this.name} channel 0`,
