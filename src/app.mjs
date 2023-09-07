@@ -2,9 +2,48 @@ import axios from 'axios'
 import {Shelly} from './shelly.mjs'
 import {createWattDataPoint} from './influx.mjs'
 
+const discoveredShellies = []
+const topicChannelNameDeviceMap = {}
+
+const getManuallyDefinedDevices = () => {
+    const devices = process.env.SHELLY_DEVICES || []
+
+    return devices.split(',')
+}
+
+const discoverDevice = async (ipAddress, mqttClient) => {
+    const device = new Shelly(ipAddress)
+
+    // Attempt to resolve the device's settings
+    try {
+        const settingsResponse = await axios.get(device.getHttpSettingsUrl())
+        device.settings = settingsResponse.data
+    } catch (e) {
+        console.error('Failed to query device for settings', e)
+    }
+
+    discoveredShellies.push(device)
+    console.log(`Discovered new device ${device.getName()}`)
+
+    // Subscribe to relevant MQTT topics, keep a map of which topic belongs to
+    // which device and what channel
+    device.getChannelNameTopicMaps().map((topicMap) => {
+        topicChannelNameDeviceMap[topicMap.topic] = {
+            device: device,
+            channelName: topicMap.name,
+        }
+
+        mqttClient.subscribe(topicMap.topic)
+    })
+}
+
 export const run = async (mdnsBrowser, mqttClient, influxClient) => {
-    const discoveredShellies = []
-    const topicChannelNameDeviceMap = {}
+    // Populate manually defined devices
+    const manuallyDefinedDevices = getManuallyDefinedDevices()
+
+    for (const ipAddress of manuallyDefinedDevices) {
+        await discoverDevice(ipAddress, mqttClient)
+    }
 
     // Populates discoveredShellies eventually by listening to mDNS responses
     mdnsBrowser.on('response', (response) => {
@@ -12,35 +51,14 @@ export const run = async (mdnsBrowser, mqttClient, influxClient) => {
             // Filter out A answers since we just want the device name really
             return answer.name.startsWith('shelly') && answer.type === 'A'
         }).map(async (answer) => {
-            const name = answer.name.substr(0, answer.name.length - '.local'.length)
+            const ipAddress = answer.data
+            const hostname = answer.name.substring(0, answer.name.length - '.local'.length)
 
             // Mark the device as discovered if we haven't seen it before
             if (discoveredShellies.filter((shelly) => {
-                return shelly.name === name
+                return shelly.getHostname() === hostname
             }).length === 0) {
-                const device = new Shelly(name, answer.data);
-
-                // Attempt to resolve the device's settings
-                try {
-                    const settingsResponse = await axios.get(device.getHttpSettingsUrl())
-                    device.settings = settingsResponse.data
-                } catch (e) {
-                    console.error('Failed to query device for settings', e)
-                }
-
-                discoveredShellies.push(device)
-                console.log(`Discovered new device ${device.getName()}`)
-
-                // Subscribe to relevant MQTT topics, keep a map of which topic belongs to
-                // which device and what channel
-                device.getChannelNameTopicMaps().map((topicMap) => {
-                    topicChannelNameDeviceMap[topicMap.topic] = {
-                        device: device,
-                        channelName: topicMap.name,
-                    }
-
-                    mqttClient.subscribe(topicMap.topic)
-                })
+                await discoverDevice(ipAddress, mqttClient)
             }
         })
     })
