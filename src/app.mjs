@@ -2,6 +2,8 @@ import axios from 'axios'
 import {Shelly} from './shelly.mjs'
 import {createWattDataPoint} from './influx.mjs'
 
+const HTTP_REQUEST_TIMEOUT_MS = 5000
+
 const discoveredShellies = []
 const topicChannelNameDeviceMap = {}
 
@@ -16,10 +18,11 @@ const discoverDevice = async (ipAddress, mqttClient) => {
 
     // Attempt to resolve the device's settings
     try {
-        const settingsResponse = await axios.get(device.getHttpSettingsUrl())
+        const settingsResponse = await axios.get(device.getHttpSettingsUrl(), {timeout: HTTP_REQUEST_TIMEOUT_MS})
         device.settings = settingsResponse.data
     } catch (e) {
-        console.error('Failed to query device for settings', e)
+        console.error(`Failed to query device for settings, skipping: ${e.toString()}`)
+        return
     }
 
     discoveredShellies.push(device)
