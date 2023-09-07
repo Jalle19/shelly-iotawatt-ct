@@ -1,16 +1,20 @@
 export class Shelly {
-    constructor(name, ipAddress) {
-        this.name = name
+    constructor(ipAddress) {
         this.ipAddress = ipAddress
         this.settings = null
     }
 
+    getHostname() {
+        return this.settings.device.hostname
+    }
+
     getType() {
-        return this.name.substring(0, this.name.lastIndexOf('-'))
+        const hostname = this.getHostname()
+        return hostname.substring(0, hostname.lastIndexOf('-'))
     }
 
     getName() {
-        return this.settings.name || this.name
+        return this.settings.name || this.getHostname()
     }
 
     getHttpSettingsUrl() {
@@ -22,7 +26,7 @@ export class Shelly {
         const topics = []
 
         const createFullTopicName = (topic) => {
-            return `shellies/${this.name}/${topic}`
+            return `shellies/${this.getHostname()}/${topic}`
         }
 
         switch (this.getType()) {
@@ -30,10 +34,10 @@ export class Shelly {
                 // Shelly 2.5 has two channels that may have user-configured names
                 topics.push({
                     topic: createFullTopicName('relay/0/power'),
-                    name: this.settings.relays[0].name || `${this.name} channel 0`,
+                    name: this.settings.relays[0].name || `${this.getName()} channel 0`,
                 }, {
                     topic: createFullTopicName('relay/1/power'),
-                    name: this.settings.relays[1].name || `${this.name} channel 1`,
+                    name: this.settings.relays[1].name || `${this.getName()} channel 1`,
                 })
                 break
             case 'shelly1pm':
@@ -41,13 +45,13 @@ export class Shelly {
             case 'shellyplug-s':
                 topics.push({
                     topic: createFullTopicName('relay/0/power'),
-                    name: this.settings.relays[0].name || `${this.name} channel 0`,
+                    name: this.settings.relays[0].name || `${this.getName()} channel 0`,
                 })
                 break
             case 'shellydimmer2':
                 topics.push({
                     topic: createFullTopicName('light/0/power'),
-                    name: this.settings.lights[0].name || `${this.name} light 0`,
+                    name: this.settings.lights[0].name || `${this.getName()} light 0`,
                 })
                 break
             default:

@@ -13,6 +13,9 @@ The application auto-discovers your Shelly devices using mDNS, then it queries e
 retrieve device and channel names. Finally, if the device is supported, the application subscribes to the relevant 
 MQTT topics for each device. Received values are then converted to InfluxDB data points and ingested there.
 
+The application also supports manually listing the Shelly devices to subscribe to, in case they're on a different 
+network and auto-discovery doesn't work.
+
 ## Requirements
 
 Infrastructure requirements:
@@ -50,6 +53,8 @@ INFLUX_USERNAME=iotawatt \
 INFLUX_PASSWORD=iotawatt \
 node --unhandled-rejections=strict ./shelly-iotawatt-ct.mjs
 ```
+
+Shelly devices to monitor can be manually specified using `SHELLY_DEVICES`, e.g. `SHELLY_DEVICES=10.112.4.1,10.112.4.2`.
 
 During normal operation, the application prints which devices it has discovered, after which it goes silent, e.g. like 
 this:
